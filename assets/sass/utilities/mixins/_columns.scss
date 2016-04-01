@@ -1,0 +1,52 @@
+// ----------------------------------------------------------------------
+
+  // Columns
+
+// ----------------------------------------------------------------------
+
+////
+/// @author Greg Rickaby
+/// @group wds
+////
+
+/// Easily create columns with Neat.
+/// Simply add the column width (e.g. just like using span-columns(4)), margin-bottom value, and then the breakpoint.
+///
+/// Basic Usage Sass
+///    .column-one-third {
+///        @include column(4, $gutter, $tablet-portrait);
+///    }
+///
+/// Basic Usage CSS Output
+///
+///     .column-one-third {
+///        width: 100%;
+///        margin-bottom: 0.75em;
+///    }
+///
+///    @media screen and (min-width: 48rem) {
+///
+///        .column-one-third {
+///            float: left;
+///            display: block;
+///            margin-right: 1.25%;
+///            width: 32.5%;
+///            margin-bottom: 0;
+///        }
+///
+///        .column-one-third:last-child {
+///            margin-right: 0;
+///        }
+///    }
+
+@mixin column( $column-width, $bottom-margin, $breakpoint ) {
+	@include fill-parent;
+
+	margin-bottom: $bottom-margin;
+
+	@include media($breakpoint) {
+		@include span-columns($column-width);
+
+		margin-bottom: 0;
+	}
+}

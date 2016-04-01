@@ -30,18 +30,46 @@
 	}
 }
 
-.primary {
-	@include fill-parent;
+// Set row & column defaults.
+.row,
+.column {
+	@include clearfix;
+}
 
-	@include media($tablet-landscape) {
-		@include span-columns(8);
-	}
+// Full width column.
+.column-full-width {
+	@include outer-container;
+}
+
+// Two-thirds width column.
+.column-two-thirds {
+	@include column(8, $gutter, $tablet-portrait);
+}
+
+// One-half width column.
+.column-one-half {
+	@include column(6, $gutter, $tablet-portrait);
+}
+
+// One-third width column.
+.column-one-third {
+	@include column(4, $gutter, $tablet-portrait);
+}
+
+// One-quarter width column.
+.column-one-quarter {
+	@include column(3, $gutter, $tablet-portrait);
+}
+
+// One-fifth width column.
+.column-one-fifth {
+	@include column(2.4, $gutter, $tablet-portrait);
+}
+
+.primary {
+	@extend .column-two-thirds;
 }
 
 .secondary {
-	@include fill-parent;
-
-	@include media($tablet-landscape) {
-		@include span-columns(4);
-	}
+	@extend .column-one-third;
 }
