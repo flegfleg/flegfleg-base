@@ -10,7 +10,7 @@
 get_header(); ?>
 
 	<div class="wrap">
-		<section class="primary content-area">
+		<div class="primary column column-two-thirds content-area">
 			<main id="main" class="site-main" role="main">
 
 			<?php
