@@ -42,7 +42,8 @@ var paths = {
 	php: ['./*.php', './**/*.php'],
 	sass: 'assets/sass/**/*.scss',
 	sass_colors: 'assets/sass/utilities/variables/_colors.scss',
-	scripts: 'assets/js/concat/*.js',
+	concat_scripts: 'assets/js/concat/*.js',
+	scripts: ['assets/js/*.js', '!assets/js/*.min.js', '!assets/js/customizer.js'],
 	sprites: 'assets/images/sprites/*.png'
 };
 
@@ -225,8 +226,10 @@ gulp.task('cssnano', ['postcss'], function() {
 
 /**
  * Sass linting
+ *
+ * https://www.npmjs.com/package/sass-lint
  */
-gulp.task('sass:lint', ['cssnano'], function () {
+gulp.task('sass:lint', ['cssnano'], function() {
 	gulp.src([
 		'assets/sass/**/*.scss',
 		'!assets/sass/base/_normalize.scss',
@@ -307,26 +310,34 @@ gulp.task('spritesmith', function() {
  * Delete scripts before we concat and minify
  */
 gulp.task('clean:scripts', function() {
-	return del(['assets/js/project.js']);
+	return del(['assets/js/project.js', 'assets/js/*.min.js']);
 });
 
 /**
- * Concatenate and minify javascripts.
- *
- * https://www.npmjs.com/package/gulp-uglify
+ * Concatenate javascripts after they're clobbered.
  * https://www.npmjs.com/package/gulp-concat
  */
-gulp.task('uglify', ['clean:scripts'], function() {
-	return gulp.src(paths.scripts)
+gulp.task('concat', ['clean:scripts'], function() {
+	return gulp.src(paths.concat_scripts)
 	.pipe(plumber({ errorHandler: handleErrors }))
 	.pipe(sourcemaps.init())
-		.pipe(uglify({
-			mangle: false
-		}))
 	.pipe(concat('project.js'))
 	.pipe(sourcemaps.write())
 	.pipe(gulp.dest('assets/js'))
 	.pipe(browserSync.stream());
+});
+
+ /**
+  * Minify javascripts after they're concatenated.
+  * https://www.npmjs.com/package/gulp-uglify
+  */
+gulp.task('uglify', ['concat'], function() {
+	return gulp.src(paths.scripts)
+	.pipe(rename({suffix: '.min'}))
+	.pipe(uglify({
+		mangle: false
+	}))
+	.pipe(gulp.dest('assets/js'));
 });
 
 /**
@@ -341,7 +352,7 @@ gulp.task('clean:pot', function() {
  *
  * https://www.npmjs.com/package/gulp-wp-pot
  */
-gulp.task('wp-pot', ['clean:pot'], function () {
+gulp.task('wp-pot', ['clean:pot'], function() {
 	return gulp.src(paths.php)
 	.pipe(plumber({ errorHandler: handleErrors }))
 	.pipe(sort())
@@ -363,21 +374,13 @@ gulp.task('wp-pot', ['clean:pot'], function () {
  */
 gulp.task('watch', function() {
 
-	// Files to watch.
-	var files = [
-		paths.icons,
-		paths.sass,
-		paths.sass_colors,
-		paths.scripts,
-		paths.sprites
-	];
-
 	// Kick off BrowserSync.
-	browserSync.init( files, {
-		open: false,
-		proxy: "_s.com",
+	browserSync({
+		open: false,             // Open project in a new tab?
+		injectChanges: true,     // Auto inject changes instead of full reload
+		proxy: "_s.com",         // Use http://_s.com:3000 to use BrowserSync
 		watchOptions: {
-			debounceDelay: 1000
+			debounceDelay: 1000  // Wait 1 second before injecting
 		}
 	});
 
@@ -386,6 +389,7 @@ gulp.task('watch', function() {
 	gulp.watch(paths.sass, ['styles']);
 	gulp.watch(paths.sass_colors, ['sass-json']);
 	gulp.watch(paths.scripts, ['scripts']);
+	gulp.watch(paths.concat_scripts, ['scripts']);
 	gulp.watch(paths.sprites, ['sprites']);
 });
 
@@ -396,6 +400,6 @@ gulp.task('i18n', ['wp-pot']);
 gulp.task('icons', ['svg']);
 gulp.task('jekyll', ['jekyll-watch']);
 gulp.task('scripts', ['uglify']);
-gulp.task('styles', ['sass:lint']);
+gulp.task('styles', ['cssnano']);
 gulp.task('sprites', ['imagemin', 'spritesmith']);
 gulp.task('default', ['i18n','icons', 'styles', 'scripts', 'sprites']);
