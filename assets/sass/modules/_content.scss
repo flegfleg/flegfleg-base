@@ -13,7 +13,7 @@
 }
 
 .hentry {
-	margin: 0 0 rem(24) 0;
+	margin: 0 0 $padding-small 0;
 }
 
 .byline,
@@ -29,16 +29,16 @@
 .page-content,
 .entry-content,
 .entry-summary {
-	margin: rem(24) 0 0;
+	margin: $padding-small 0 0;
 }
 
 .page-links {
 	clear: both;
-	margin: 0 0 rem(24) 0;
+	margin: 0 0 $padding-small 0;
 }
 
 .edit-link {
-	margin: 0 rem(24);
+	margin: 0 $padding-small;
 }
 
 // Asides

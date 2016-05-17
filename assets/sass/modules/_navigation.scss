@@ -97,7 +97,7 @@ a {
 
 		// Sub-menu
 		ul {
-			@include position(absolute, rem(24) null null rem(-9999));
+			@include position(absolute, $padding-small null null rem(-9999));
 
 			background-color: $color-white;
 			box-shadow: 0 3px 3px rgba($color-black, 0.2);
@@ -169,7 +169,7 @@ a {
 .post-navigation {
 
 	.site-main & {
-		margin: 0 0 rem(24) 0;
+		margin: 0 0 $padding-small 0;
 		overflow: hidden;
 	}
 
