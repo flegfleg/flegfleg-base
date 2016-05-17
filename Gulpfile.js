@@ -282,7 +282,7 @@ gulp.task('watch', function() {
 	browserSync({
 		open: false,             // Open project in a new tab?
 		injectChanges: true,     // Auto inject changes instead of full reload
-		proxy: "testing.dev",         // Use http://www.fleg.de:3000 to use BrowserSync
+		proxy: "http://localhost:8888/dev/wordpress/",         // Use http://www.fleg.de:3000 to use BrowserSync
 		watchOptions: {
 			debounceDelay: 1000  // Wait 1 second before injecting
 		}

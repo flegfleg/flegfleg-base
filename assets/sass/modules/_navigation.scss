@@ -43,6 +43,7 @@ a {
 // Main navigation container
 .main-navigation {
 	@include size(100% auto);
+	background-color: $color-background-hr;
 
 	clear: both;
 	display: block;
