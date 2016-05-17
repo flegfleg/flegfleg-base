@@ -6,7 +6,7 @@
  *
  * @link https://developer.wordpress.org/themes/basics/template-files/#template-partials
  *
- * @package _s
+ * @package flegfleg-base
  */
 
 ?>
@@ -17,7 +17,7 @@
 		<div class="wrap">
 
 			<div class="site-info">
-				<?php _s_do_copyright_text(); ?>
+				<?php flegfleg_base_do_copyright_text(); ?>
 			</div>
 
 		</div><!-- .wrap -->

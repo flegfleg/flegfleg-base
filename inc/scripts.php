@@ -2,7 +2,7 @@
 /**
  * Custom scripts and styles.
  *
- * @package _s
+ * @package flegfleg-base
  */
 
 /**
@@ -10,7 +10,7 @@
  *
  * @link http://themeshaper.com/2014/08/13/how-to-add-google-fonts-to-wordpress-themes/
  */
-function _s_font_url() {
+function flegfleg_base_font_url() {
 
 	$fonts_url = '';
 
@@ -19,8 +19,8 @@ function _s_font_url() {
 	 * supported by the following, translate this to 'off'. Do not translate
 	 * into your own language.
 	 */
-	$roboto = _x( 'on', 'Roboto font: on or off', '_s' );
-	$open_sans = _x( 'on', 'Open Sans font: on or off', '_s' );
+	$roboto = _x( 'on', 'Roboto font: on or off', 'flegfleg-base' );
+	$open_sans = _x( 'on', 'Open Sans font: on or off', 'flegfleg-base' );
 
 	if ( 'off' !== $roboto || 'off' !== $open_sans ) {
 		$font_families = array();
@@ -46,7 +46,7 @@ function _s_font_url() {
 /**
  * Enqueue scripts and styles.
  */
-function _s_scripts() {
+function flegfleg_base_scripts() {
 	/**
 	 * If WP is in script debug, or we pass ?script_debug in a URL - set debug to true.
 	 */
@@ -63,21 +63,21 @@ function _s_scripts() {
 	$suffix = ( true === $debug ) ? '' : '.min';
 
 	// Register styles.
-	wp_register_style( '_s-google-font', _s_font_url(), array(), null );
+	wp_register_style( 'flegfleg-base-google-font', flegfleg_base_font_url(), array(), null );
 
 	// Enqueue styles.
-	wp_enqueue_style( '_s-google-font' );
+	wp_enqueue_style( 'flegfleg-base-google-font' );
 	wp_enqueue_style( 'animate.css' );
-	wp_enqueue_style( '_s-style', get_stylesheet_directory_uri() . '/style' . $suffix . '.css', array(), $version );
+	wp_enqueue_style( 'flegfleg-base-style', get_stylesheet_directory_uri() . '/style' . $suffix . '.css', array(), $version );
 
 	// Enqueue scripts.
-	wp_enqueue_script( '_s-scripts', get_template_directory_uri() . '/assets/js/project' . $suffix . '.js', array( 'jquery' ), $version, true );
+	wp_enqueue_script( 'flegfleg-base-scripts', get_template_directory_uri() . '/assets/js/project' . $suffix . '.js', array( 'jquery' ), $version, true );
 
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
 		wp_enqueue_script( 'comment-reply' );
 	}
 }
-add_action( 'wp_enqueue_scripts', '_s_scripts' );
+add_action( 'wp_enqueue_scripts', 'flegfleg_base_scripts' );
 
 
 if ( class_exists( 'WDS_Simple_Page_Builder' ) && version_compare( WDS_Simple_Page_Builder::VERSION, '1.6', '>=' ) ) :
@@ -85,7 +85,7 @@ if ( class_exists( 'WDS_Simple_Page_Builder' ) && version_compare( WDS_Simple_Pa
 	/**
 	 * Conditionally enqueue styles & scripts via Page Builder.
 	 */
-	function _s_enqueue_page_builder_scripts() {
+	function flegfleg_base_enqueue_page_builder_scripts() {
 
 		// Get the page builder parts
 		$parts = get_page_builder_parts();
@@ -97,14 +97,14 @@ if ( class_exists( 'WDS_Simple_Page_Builder' ) && version_compare( WDS_Simple_Pa
 		// }
 
 	}
-	add_action( 'wds_page_builder_after_load_parts', '_s_enqueue_page_builder_scripts' );
+	add_action( 'wds_page_builder_after_load_parts', 'flegfleg_base_enqueue_page_builder_scripts' );
 
 endif;
 
 /**
  * Add SVG definitions to <head>.
  */
-function _s_include_svg_icons() {
+function flegfleg_base_include_svg_icons() {
 
 	// Define SVG sprite file.
 	$svg_icons = get_template_directory() . '/assets/images/svg-icons.svg';

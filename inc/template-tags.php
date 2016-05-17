@@ -4,14 +4,14 @@
  *
  * Eventually, some of the functionality here could be replaced by core features.
  *
- * @package _s
+ * @package flegfleg-base
  */
 
-if ( ! function_exists( '_s_posted_on' ) ) :
+if ( ! function_exists( 'flegfleg_base_posted_on' ) ) :
 /**
  * Prints HTML with meta information for the current post-date/time and author.
  */
-function _s_posted_on() {
+function flegfleg_base_posted_on() {
 	$time_string = '<time class="entry-date published updated" datetime="%1$s">%2$s</time>';
 	if ( get_the_time( 'U' ) !== get_the_modified_time( 'U' ) ) {
 		$time_string = '<time class="entry-date published" datetime="%1$s">%2$s</time><time class="updated" datetime="%3$s">%4$s</time>';
@@ -25,12 +25,12 @@ function _s_posted_on() {
 	);
 
 	$posted_on = sprintf(
-		esc_html_x( 'Posted on %s', 'post date', '_s' ),
+		esc_html_x( 'Posted on %s', 'post date', 'flegfleg-base' ),
 		'<a href="' . esc_url( get_permalink() ) . '" rel="bookmark">' . $time_string . '</a>'
 	);
 
 	$byline = sprintf(
-		esc_html_x( 'by %s', 'post author', '_s' ),
+		esc_html_x( 'by %s', 'post author', 'flegfleg-base' ),
 		'<span class="author vcard"><a class="url fn n" href="' . esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ) . '">' . esc_html( get_the_author() ) . '</a></span>'
 	);
 
@@ -39,36 +39,36 @@ function _s_posted_on() {
 }
 endif;
 
-if ( ! function_exists( '_s_entry_footer' ) ) :
+if ( ! function_exists( 'flegfleg_base_entry_footer' ) ) :
 /**
  * Prints HTML with meta information for the categories, tags and comments.
  */
-function _s_entry_footer() {
+function flegfleg_base_entry_footer() {
 	// Hide category and tag text for pages.
 	if ( 'post' === get_post_type() ) {
 		/* translators: used between list items, there is a space after the comma */
-		$categories_list = get_the_category_list( esc_html__( ', ', '_s' ) );
-		if ( $categories_list && _s_categorized_blog() ) {
-			printf( '<span class="cat-links">' . esc_html__( 'Posted in %1$s', '_s' ) . '</span>', $categories_list ); // WPCS: XSS OK.
+		$categories_list = get_the_category_list( esc_html__( ', ', 'flegfleg-base' ) );
+		if ( $categories_list && flegfleg_base_categorized_blog() ) {
+			printf( '<span class="cat-links">' . esc_html__( 'Posted in %1$s', 'flegfleg-base' ) . '</span>', $categories_list ); // WPCS: XSS OK.
 		}
 
 		/* translators: used between list items, there is a space after the comma */
-		$tags_list = get_the_tag_list( '', esc_html__( ', ', '_s' ) );
+		$tags_list = get_the_tag_list( '', esc_html__( ', ', 'flegfleg-base' ) );
 		if ( $tags_list ) {
-						printf( '<span class="tags-links">' . esc_html__( 'Tagged %1$s', '_s' ) . '</span>', $tags_list ); // WPCS: XSS OK.
+						printf( '<span class="tags-links">' . esc_html__( 'Tagged %1$s', 'flegfleg-base' ) . '</span>', $tags_list ); // WPCS: XSS OK.
 		}
 	}
 
 	if ( ! is_single() && ! post_password_required() && ( comments_open() || get_comments_number() ) ) {
 		echo '<span class="comments-link">';
-		comments_popup_link( esc_html__( 'Leave a comment', '_s' ), esc_html__( '1 Comment', '_s' ), esc_html__( '% Comments', '_s' ) );
+		comments_popup_link( esc_html__( 'Leave a comment', 'flegfleg-base' ), esc_html__( '1 Comment', 'flegfleg-base' ), esc_html__( '% Comments', 'flegfleg-base' ) );
 		echo '</span>';
 	}
 
 	edit_post_link(
 		sprintf(
 			/* translators: %s: Name of current post */
-			esc_html__( 'Edit %s', '_s' ),
+			esc_html__( 'Edit %s', 'flegfleg-base' ),
 			the_title( '<span class="screen-reader-text">"', '"</span>', false )
 		),
 		'<span class="edit-link">',
@@ -82,8 +82,8 @@ endif;
  *
  * @return bool
  */
-function _s_categorized_blog() {
-	if ( false === ( $all_the_cool_cats = get_transient( '_s_categories' ) ) ) {
+function flegfleg_base_categorized_blog() {
+	if ( false === ( $all_the_cool_cats = get_transient( 'flegfleg_base_categories' ) ) ) {
 		// Create an array of all the categories that are attached to posts.
 		$all_the_cool_cats = get_categories( array(
 			'fields'     => 'ids',
@@ -96,30 +96,30 @@ function _s_categorized_blog() {
 		// Count the number of categories that are attached to the posts.
 		$all_the_cool_cats = count( $all_the_cool_cats );
 
-		set_transient( '_s_categories', $all_the_cool_cats );
+		set_transient( 'flegfleg_base_categories', $all_the_cool_cats );
 	}
 
 	if ( $all_the_cool_cats > 1 ) {
-		// This blog has more than 1 category so _s_categorized_blog should return true.
+		// This blog has more than 1 category so flegfleg_base_categorized_blog should return true.
 		return true;
 	} else {
-		// This blog has only 1 category so _s_categorized_blog should return false.
+		// This blog has only 1 category so flegfleg_base_categorized_blog should return false.
 		return false;
 	}
 }
 
 /**
- * Flush out the transients used in _s_categorized_blog.
+ * Flush out the transients used in flegfleg_base_categorized_blog.
  */
-function _s_category_transient_flusher() {
+function flegfleg_base_category_transient_flusher() {
 	if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
 		return false;
 	}
 	// Like, beat it. Dig?
-	delete_transient( '_s_categories' );
+	delete_transient( 'flegfleg_base_categories' );
 }
-add_action( 'delete_category', '_s_category_transient_flusher' );
-add_action( 'save_post',     '_s_category_transient_flusher' );
+add_action( 'delete_category', 'flegfleg_base_category_transient_flusher' );
+add_action( 'save_post',     'flegfleg_base_category_transient_flusher' );
 
 /**
  * Return SVG markup.
@@ -133,16 +133,16 @@ add_action( 'save_post',     '_s_category_transient_flusher' );
  * }
  * @return string SVG markup.
  */
-function _s_get_svg( $args = array() ) {
+function flegfleg_base_get_svg( $args = array() ) {
 
 	// Make sure $args are an array.
 	if ( empty( $args ) ) {
-		return esc_html__( 'Please define default parameters in the form of an array.', '_s' );
+		return esc_html__( 'Please define default parameters in the form of an array.', 'flegfleg-base' );
 	}
 
 	// YUNO define an icon?
 	if ( false === array_key_exists( 'icon', $args ) ) {
-		return esc_html__( 'Please define an SVG icon filename.', '_s' );
+		return esc_html__( 'Please define an SVG icon filename.', 'flegfleg-base' );
 	}
 
 	// Set defaults.
@@ -179,8 +179,8 @@ function _s_get_svg( $args = array() ) {
  *
  * @param  array  $args  Parameters needed to display an SVG.
  */
-function _s_do_svg( $args = array() ) {
-	echo _s_get_svg( $args );
+function flegfleg_base_do_svg( $args = array() ) {
+	echo flegfleg_base_get_svg( $args );
 }
 
 /**
@@ -189,7 +189,7 @@ function _s_do_svg( $args = array() ) {
  * @param  array  $args  Parameters include length and more.
  * @return string        The shortened excerpt.
  */
-function _s_get_the_title( $args = array() ) {
+function flegfleg_base_get_the_title( $args = array() ) {
 
 	// Set defaults.
 	$defaults = array(
@@ -210,7 +210,7 @@ function _s_get_the_title( $args = array() ) {
  * @param  array  $args  Parameters include length and more.
  * @return string        The shortened excerpt.
  */
-function _s_get_the_excerpt( $args = array() ) {
+function flegfleg_base_get_the_excerpt( $args = array() ) {
 
 	// Set defaults.
 	$defaults = array(
@@ -230,7 +230,7 @@ function _s_get_the_excerpt( $args = array() ) {
  *
  * @param string  $size  The image size you want to display.
  */
-function _s_do_post_image( $size = 'thumbnail' ) {
+function flegfleg_base_do_post_image( $size = 'thumbnail' ) {
 
 	// If featured image is present, use that.
 	if ( has_post_thumbnail() ) {
@@ -258,7 +258,7 @@ function _s_do_post_image( $size = 'thumbnail' ) {
  * @param  string  $size  The image size you want to return.
  * @return string         The image URI.
  */
-function _s_get_post_image_uri( $size = 'thumbnail' ) {
+function flegfleg_base_get_post_image_uri( $size = 'thumbnail' ) {
 
 	// If featured image is present, use that.
 	if ( has_post_thumbnail() ) {
@@ -292,7 +292,7 @@ function _s_get_post_image_uri( $size = 'thumbnail' ) {
  * @param  string  $attachment_url  The URL of the attachment.
  * @return int                      The attachment ID.
  */
-function _s_get_attachment_id_from_url( $attachment_url = '' ) {
+function flegfleg_base_get_attachment_id_from_url( $attachment_url = '' ) {
 
 	global $wpdb;
 
@@ -326,10 +326,10 @@ function _s_get_attachment_id_from_url( $attachment_url = '' ) {
 /**
  * Echo the copyright text saved in the Customizer.
  */
-function _s_do_copyright_text() {
+function flegfleg_base_do_copyright_text() {
 
 	// Grab our customizer settings.
-	$copyright_text = get_theme_mod( '_s_copyright_text' );
+	$copyright_text = get_theme_mod( 'flegfleg_base_copyright_text' );
 
 	// Stop if there's nothing to display.
 	if ( ! $copyright_text ) {
@@ -345,7 +345,7 @@ function _s_do_copyright_text() {
  *
  * @return string
  */
-function _s_get_social_share() {
+function flegfleg_base_get_social_share() {
 
 	// Build the sharing URLs.
 	$twitter_url  = 'https://twitter.com/share?text=' . urlencode( html_entity_decode( get_the_title() ) ) . '&amp;url=' . rawurlencode ( get_the_permalink() );
@@ -355,24 +355,24 @@ function _s_get_social_share() {
 	// Start the markup.
 	ob_start(); ?>
 	<div class="social-share">
-		<h5 class="social-share-title"><?php esc_html_e( 'Share This', '_s' ); ?></h5>
+		<h5 class="social-share-title"><?php esc_html_e( 'Share This', 'flegfleg-base' ); ?></h5>
 		<ul class="social-icons menu menu-horizontal">
 			<li class="social-icon">
 				<a href="<?php echo esc_url( $twitter_url ); ?>" onclick="window.open(this.href, 'targetWindow', 'toolbar=no, location=no, status=no, menubar=no, scrollbars=yes, resizable=yes, top=150, left=0, width=600, height=300' ); return false;">
-					<?php _s_do_svg( array( 'icon' => 'twitter-square', 'title' => 'Twitter', 'desc' => __( 'Share on Twitter', '_s' ) ) ); ?>
-					<span class="screen-reader-text"><?php esc_html_e( 'Share on Twitter', '_s' ); ?></span>
+					<?php flegfleg_base_do_svg( array( 'icon' => 'twitter-square', 'title' => 'Twitter', 'desc' => __( 'Share on Twitter', 'flegfleg-base' ) ) ); ?>
+					<span class="screen-reader-text"><?php esc_html_e( 'Share on Twitter', 'flegfleg-base' ); ?></span>
 				</a>
 			</li>
 			<li class="social-icon">
 				<a href="<?php echo esc_url( $facebook_url ); ?>" onclick="window.open(this.href, 'targetWindow', 'toolbar=no, location=no, status=no, menubar=no, scrollbars=yes, resizable=yes, top=150, left=0, width=600, height=300' ); return false;">
-					<?php _s_do_svg( array( 'icon' => 'facebook-square', 'title' => 'Facebook', 'desc' => __( 'Share on Facebook', '_s' ) ) ); ?>
-					<span class="screen-reader-text"><?php esc_html_e( 'Share on Facebook', '_s' ); ?></span>
+					<?php flegfleg_base_do_svg( array( 'icon' => 'facebook-square', 'title' => 'Facebook', 'desc' => __( 'Share on Facebook', 'flegfleg-base' ) ) ); ?>
+					<span class="screen-reader-text"><?php esc_html_e( 'Share on Facebook', 'flegfleg-base' ); ?></span>
 				</a>
 			</li>
 			<li class="social-icon">
 				<a href="<?php echo esc_url( $linkedin_url ); ?>" onclick="window.open(this.href, 'targetWindow', 'toolbar=no, location=no, status=no, menubar=no, scrollbars=yes, resizable=yes, top=150, left=0, width=475, height=505' ); return false;">
-					<?php _s_do_svg( array( 'icon' => 'linkedin-square', 'title' => 'LinkedIn', 'desc' => __( 'Share on LinkedIn', '_s' ) ) ); ?>
-					<span class="screen-reader-text"><?php esc_html_e( 'Share on LinkedIn', '_s' ); ?></span>
+					<?php flegfleg_base_do_svg( array( 'icon' => 'linkedin-square', 'title' => 'LinkedIn', 'desc' => __( 'Share on LinkedIn', 'flegfleg-base' ) ) ); ?>
+					<span class="screen-reader-text"><?php esc_html_e( 'Share on LinkedIn', 'flegfleg-base' ); ?></span>
 				</a>
 			</li>
 		</ul>
@@ -385,6 +385,6 @@ function _s_get_social_share() {
 /**
  * Echo social sharing icons.
  */
-function _s_do_social_share() {
-	echo _s_get_social_share();
+function flegfleg_base_do_social_share() {
+	echo flegfleg_base_get_social_share();
 }

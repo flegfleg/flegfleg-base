@@ -1,8 +1,8 @@
 <?php
 /**
- * _s Theme Customizer.
+ * flegfleg-base Theme Customizer.
  *
- * @package _s
+ * @package flegfleg-base
  */
 
 /**
@@ -10,17 +10,17 @@
  *
  * @param WP_Customize_Manager $wp_customize Theme Customizer object.
  */
-function _s_customize_register( $wp_customize ) {
+function flegfleg_base_customize_register( $wp_customize ) {
 	$wp_customize->get_setting( 'blogname' )->transport         = 'postMessage';
 	$wp_customize->get_setting( 'blogdescription' )->transport  = 'postMessage';
 	$wp_customize->get_setting( 'header_textcolor' )->transport = 'postMessage';
 
 	// Add our social link options.
     $wp_customize->add_section(
-        '_s_social_links_section',
+        'flegfleg_base_social_links_section',
         array(
-            'title'       => esc_html__( 'Social Links', '_s' ),
-            'description' => esc_html__( 'These are the settings for social links. Please limit the number of social links to 5.', '_s' ),
+            'title'       => esc_html__( 'Social Links', 'flegfleg-base' ),
+            'description' => esc_html__( 'These are the settings for social links. Please limit the number of social links to 5.', 'flegfleg-base' ),
             'priority'    => 90,
         )
     );
@@ -32,17 +32,17 @@ function _s_customize_register( $wp_customize ) {
     foreach( $social_networks as $network ) {
 
 	    $wp_customize->add_setting(
-	        '_s_' . $network . '_link',
+	        'flegfleg_base_' . $network . '_link',
 	        array(
 	            'default' => '',
-	            'sanitize_callback' => '_s_sanitize_customizer_url'
+	            'sanitize_callback' => 'flegfleg_base_sanitize_customizer_url'
 	        )
 	    );
 	    $wp_customize->add_control(
-	        '_s_' . $network . '_link',
+	        'flegfleg_base_' . $network . '_link',
 	        array(
-	            'label'   => sprintf( esc_html__( '%s Link', '_s' ), ucwords( $network ) ),
-	            'section' => '_s_social_links_section',
+	            'label'   => sprintf( esc_html__( '%s Link', 'flegfleg-base' ), ucwords( $network ) ),
+	            'section' => 'flegfleg_base_social_links_section',
 	            'type'    => 'text',
 	        )
 	    );
@@ -50,51 +50,51 @@ function _s_customize_register( $wp_customize ) {
 
     // Add our Footer Customization section section.
     $wp_customize->add_section(
-        '_s_footer_section',
+        'flegfleg_base_footer_section',
         array(
-            'title'    => esc_html__( 'Footer Customization', '_s' ),
+            'title'    => esc_html__( 'Footer Customization', 'flegfleg-base' ),
             'priority' => 90,
         )
     );
 
     // Add our copyright text field.
     $wp_customize->add_setting(
-        '_s_copyright_text',
+        'flegfleg_base_copyright_text',
         array(
             'default' => ''
         )
     );
     $wp_customize->add_control(
-        '_s_copyright_text',
+        'flegfleg_base_copyright_text',
         array(
-            'label'       => esc_html__( 'Copyright Text', '_s' ),
-            'description' => esc_html__( 'The copyright text will be displayed beneath the menu in the footer.', '_s' ),
-            'section'     => '_s_footer_section',
+            'label'       => esc_html__( 'Copyright Text', 'flegfleg-base' ),
+            'description' => esc_html__( 'The copyright text will be displayed beneath the menu in the footer.', 'flegfleg-base' ),
+            'section'     => 'flegfleg_base_footer_section',
             'type'        => 'text',
             'sanitize'    => 'html'
         )
     );
 }
-add_action( 'customize_register', '_s_customize_register' );
+add_action( 'customize_register', 'flegfleg_base_customize_register' );
 
 /**
  * Binds JS handlers to make Theme Customizer preview reload changes asynchronously.
  */
-function _s_customize_preview_js() {
-    wp_enqueue_script( '_s_customizer', get_template_directory_uri() . '/assets/js/customizer.js', array( 'customize-preview' ), '20151215', true );
+function flegfleg_base_customize_preview_js() {
+    wp_enqueue_script( 'flegfleg_base_customizer', get_template_directory_uri() . '/assets/js/customizer.js', array( 'customize-preview' ), '20151215', true );
 }
-add_action( 'customize_preview_init', '_s_customize_preview_js' );
+add_action( 'customize_preview_init', 'flegfleg_base_customize_preview_js' );
 
 /**
  * Sanitize our customizer text inputs.
  */
-function _s_sanitize_customizer_text( $input ) {
+function flegfleg_base_sanitize_customizer_text( $input ) {
     return sanitize_text_field( force_balance_tags( $input ) );
 }
 
 /**
  * Sanitize our customizer URL inputs.
  */
-function _s_sanitize_customizer_url( $input ) {
+function flegfleg_base_sanitize_customizer_url( $input ) {
     return esc_url( $input );
 }

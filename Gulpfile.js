@@ -248,7 +248,7 @@ gulp.task('uglify', ['concat'], function() {
  * Delete the theme's .pot before we create a new one.
  */
 gulp.task('clean:pot', function() {
-	return del(['languages/_s.pot']);
+	return del(['languages/flegfleg-base.pot']);
 });
 
 /**
@@ -261,12 +261,12 @@ gulp.task('wp-pot', ['clean:pot'], function() {
 	.pipe(plumber({ errorHandler: handleErrors }))
 	.pipe(sort())
 	.pipe(wpPot({
-		domain: '_s',
-		destFile:'_s.pot',
-		package: '_s',
-		bugReport: 'http://_s.com',
-		lastTranslator: 'John Doe <mail@_s.com>',
-		team: 'Team <mail@_s.com>'
+		domain: 'flegfleg-base',
+		destFile:'flegfleg-base.pot',
+		package: 'flegfleg-base',
+		bugReport: 'http://www.fleg.de',
+		lastTranslator: 'Florian Egermann <hallo@fleg.de>',
+		team: 'Team <hallo@fleg.de>'
 	}))
 	.pipe(gulp.dest('languages/'));
 });
@@ -282,7 +282,7 @@ gulp.task('watch', function() {
 	browserSync({
 		open: false,             // Open project in a new tab?
 		injectChanges: true,     // Auto inject changes instead of full reload
-		proxy: "http://localhost:3000/dev/wordpress/",         // Use http://_s.com:3000 to use BrowserSync
+		proxy: "testing.dev",         // Use http://www.fleg.de:3000 to use BrowserSync
 		watchOptions: {
 			debounceDelay: 1000  // Wait 1 second before injecting
 		}
