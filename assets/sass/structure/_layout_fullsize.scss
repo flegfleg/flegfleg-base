@@ -1,0 +1,58 @@
+//--------------------------------------------------------------
+// Base Layout
+//--------------------------------------------------------------
+
+// Structure
+
+.wrap {
+	@include outer-container;
+	@include media($desktop) {
+	}
+}
+
+.site-branding,
+.main-navigation,
+.site-footer {
+	padding: $gutter;
+	@include media($tablet-landscape) {
+	}
+}
+
+.site-content {
+
+}
+
+.primary {
+	border: 1px solid red;
+	@include fill-parent;
+	padding: $gutter;
+
+	@include media($tablet-landscape) {
+	}
+}
+
+.secondary {
+	border: 1px solid red;
+	@include fill-parent;
+	@include span-columns(12);
+
+	.widget {
+
+		@include media(min-width $phone-landscape max-width $tablet-landscape) {
+			@include span-columns(6);
+	    @include omega(2n);
+			padding: $gutter;
+			height: 250px;
+		}	
+
+		@include media($tablet-landscape) {
+			@include span-columns(3);
+	    @include omega(4n);
+			border: 1px solid green;
+			padding: $gutter;
+			height: 250px;
+		}	
+
+	}
+
+}
