@@ -145,3 +145,13 @@ require get_template_directory() . '/inc/jetpack.php';
  * Load styles and scripts.
  */
 require get_template_directory() . '/inc/scripts.php';
+
+/**
+ * Load CMB2 & create meta-boxes
+ */
+require get_template_directory() . '/inc/custom-meta-boxes.php';
+
+/**
+ * Load CPT-Core & create Custom post types
+ */
+require get_template_directory() . '/inc/custom-post-types.php';
