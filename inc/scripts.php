@@ -14,32 +14,17 @@ function flegfleg_base_font_url() {
 
 	$fonts_url = '';
 
-	/**
-	 * Translators: If there are characters in your language that are not
-	 * supported by the following, translate this to 'off'. Do not translate
-	 * into your own language.
-	 */
-	$roboto = _x( 'on', 'Roboto font: on or off', 'flegfleg-base' );
-	$open_sans = _x( 'on', 'Open Sans font: on or off', 'flegfleg-base' );
+	$font_families = array(
+		'Karla:400,400italic,700,700italic',
+		'Open Sans:400,300,700',
+		'Cousine:400,700,400italic,700italic'
+	);
 
-	if ( 'off' !== $roboto || 'off' !== $open_sans ) {
-		$font_families = array();
-
-		if ( 'off' !== $roboto ) {
-			$font_families[] = 'Roboto:400,700';
-		}
-
-		if ( 'off' !== $open_sans ) {
-			$font_families[] = 'Open Sans:400,300,700';
-		}
-
-		$query_args = array(
-			'family' => urlencode( implode( '|', $font_families ) ),
-		);
-
-		$fonts_url = add_query_arg( $query_args, '//fonts.googleapis.com/css' );
-	}
-
+	$query_args = array(
+		'family' => urlencode( implode( '|', $font_families ) ),
+	);
+	
+	$fonts_url = add_query_arg( $query_args, '//fonts.googleapis.com/css' );
 	return $fonts_url;
 }
 
