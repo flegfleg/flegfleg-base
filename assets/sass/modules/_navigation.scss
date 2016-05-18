@@ -20,6 +20,8 @@ a {
 // Navicon menu
 .menu-toggle {
 	display: block;
+	margin: 0 auto;
+	width: 100%;
 
 	.icon {
 		@include size(rem(12) rem(14));
@@ -44,10 +46,13 @@ a {
 .main-navigation {
 	@include size(100% auto);
 	background-color: $color-background-hr;
-
 	clear: both;
 	display: block;
 	float: left;
+
+
+
+
 
 	// Menu area
 	ul {
@@ -58,8 +63,23 @@ a {
 		}
 	}
 
+	// Mobile Menu open
 	&.toggled ul {
 		display: block;
+
+		li {
+			@include size(100% auto);
+			padding: $padding-small / 2;
+			&:hover {
+				background: $color-white;
+			}
+
+			ul.sub-menu {
+  			@include position(relative, 0 null null null);
+				left: 0;
+			}
+
+		}
 	}
 }
 
@@ -99,12 +119,11 @@ a {
 		// Sub-menu
 		ul {
 			@include position(absolute, $padding-small null null rem(-9999));
-
 			background-color: $color-white;
-			box-shadow: 0 3px 3px rgba($color-black, 0.2);
 			float: left;
-			padding: rem(8);
 			z-index: 99999;
+			padding: $padding-small /2;
+
 
 			// Sub-sub menu
 			ul {
