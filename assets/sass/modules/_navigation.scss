@@ -17,7 +17,7 @@ a {
 	}
 }
 
-// Navicon menu
+// Navicon Toggle
 .menu-toggle {
 	display: block;
 	margin: 0 auto;
@@ -45,40 +45,54 @@ a {
 
 // Main navigation container
 .main-navigation {
-	@include size(100% auto);
+	
+	@include transition(max-height 1.0s ease);
+
+	// @include size(100% auto);
 	background-color: $color-background-hr;
+	border: 1px solid green;
 	clear: both;
 	display: block;
 	float: left;
 	height: $navbar-height;
+	max-height: $navbar-height;
 	line-height: $navbar-height;
 	padding: 0 $padding-mini;
 
 
+
 	// Menu area
 	ul {
-		display: none;
+		@include transition(opacity 1.0s ease-in);
+
+		display: hidden;
+		opacity: 0;
 
 		@include media($phone-landscape) {
 			display: block;
+			opacity: 1;
 		}
 	}
 
 	// Mobile Menu open
-	&.toggled ul {
-		display: block;
+	&.toggled {
+		max-height: 1000px;
+		height: auto;
+		ul {
+			display: block;
+			opacity: 1;
 
-		li {
-			@include size(100% auto);
-			&:hover {
-				background: $color-white;
+			li {
+				@include size(100% auto);
+				&:hover {
+					background: $color-white;
+				}
+
+				ul.sub-menu {
+	  			@include position(relative, 0 null null null);
+					left: 0;
+				}
 			}
-
-			ul.sub-menu {
-  			@include position(relative, 0 null null null);
-				left: 0;
-			}
-
 		}
 	}
 }
