@@ -37,11 +37,11 @@
 	@include span-columns(12);
 
 	.widget {
+			padding: $gutter;
 
 		@include media(min-width $phone-landscape max-width $tablet-landscape) {
 			@include span-columns(6);
 	    @include omega(2n);
-			padding: $gutter;
 			height: 250px;
 		}	
 
