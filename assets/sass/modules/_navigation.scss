@@ -21,8 +21,9 @@ a {
 .menu-toggle {
 	display: block;
 	margin: 0 auto;
-	width: 100%;
-
+	background: transparent;
+	line-height: $navbar-height;
+	height: $navbar-height;
 	.icon {
 		@include size(rem(12) rem(14));
 
@@ -49,9 +50,9 @@ a {
 	clear: both;
 	display: block;
 	float: left;
-
-
-
+	height: $navbar-height;
+	line-height: $navbar-height;
+	padding: 0 $padding-mini;
 
 
 	// Menu area
@@ -69,7 +70,6 @@ a {
 
 		li {
 			@include size(100% auto);
-			padding: $padding-small / 2;
 			&:hover {
 				background: $color-white;
 			}
@@ -118,7 +118,7 @@ a {
 
 		// Sub-menu
 		ul {
-			@include position(absolute, $padding-small null null rem(-9999));
+			@include position(absolute, $navbar-height null null rem(-9999));
 			background-color: $color-white;
 			float: left;
 			z-index: 99999;
